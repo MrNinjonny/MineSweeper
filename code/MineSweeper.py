@@ -18,8 +18,8 @@ class mishbezet(ButtonBehavior,Image):
         self.flagged = False
         self.col = colom
         self.num = num
-        self.picNormal = "dolphin.jpg"
-        self.bombPic = "bomb.jpg"
+        self.picNormal = "pics/dolphin.jpg"
+        self.bombPic = "pics/bomb.jpg"
         self.source = self.picNormal
     # random.randint(1,101)
 
@@ -62,7 +62,7 @@ class Board(GridLayout):
     def reveal(self, touch):
         touch.hidden = False
         self.to_reveal-= 1
-        touch.source = str(touch.num) + ".jpg"
+        touch.source = "pics/" + str(touch.num) + ".jpg"
         if touch.num == 0:
             for x in self.myBoard:
                 if x != touch and x.col in [touch.col, touch.col - 1, touch.col + 1] and x.line in [touch.line,
@@ -70,14 +70,13 @@ class Board(GridLayout):
                                                                                                     touch.line + 1] and x.hidden:
                     self.reveal(x)
 
-
     def click(self,touch):
         if not self.game_over:
             if touch.last_touch.button == "left":
                 if not touch.flagged:
                     if touch.hidden:
                         if touch.num == -1:
-                            touch.source = "bomb.jpg"
+                            touch.source = "pics/bomb.jpg"
                             touch.hidden = False
                             self.game_over = True
                             self.add_widget(Label(text="GAME OVER", font_size='20sp', color=(1, 0, 0, 1)))
@@ -89,12 +88,12 @@ class Board(GridLayout):
             if touch.last_touch.button == "right":
                 if touch.hidden:
                     if not touch.flagged:
-                        touch.source = "flag.jpg"
+                        touch.source = "pics/flag.jpg"
                         touch.flagged = True
                         self.countBomb -= 1
                         self.l1.text = str(self.countBomb)
                     else:
-                        touch.source = "dolphin.jpg"
+                        touch.source = "pics/dolphin.jpg"
                         touch.flagged = False
                         self.countBomb += 1
                         self.l1.text = str(self.countBomb)
